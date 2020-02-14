@@ -12,7 +12,7 @@ namespace Theorem_ACPrototype_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MoviesController : BaseController<Device, EfCoreDeviceRepository>
+    public class DeviceController : BaseController<Device, EfCoreDeviceRepository>
     {
         private static readonly string[] Summaries = new[]
         {
@@ -21,22 +21,23 @@ namespace Theorem_ACPrototype_WebAPI.Controllers
 
 
 
-        public MoviesController(EfCoreDeviceRepository repository) : base(repository)
+        public DeviceController(EfCoreDeviceRepository repository) : base(repository)
         {
 
         }
 
-        //[HttpGet]
-        //public IEnumerable<WeatherForecast> GetTest()
-        //{
-        //    var rng = new Random();
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateTime.Now.AddDays(index),
-        //        TemperatureC = rng.Next(-20, 55),
-        //        Summary = Summaries[rng.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
+
+        [HttpGet("/test")]
+        public IEnumerable<WeatherForecast> Get2()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Theorem_ACPrototype_WebAPI
         {
             services.AddDbContext<DeviceContext>(opt =>
                     opt.UseInMemoryDatabase("DeviceContext")
-                    //opt.UseSqlServer(Configuration.GetConnectionString("DeviceContext"))
+                //opt.UseSqlServer(Configuration.GetConnectionString("DeviceContext"))
                 );
 
             services.AddControllers();
@@ -48,9 +48,12 @@ namespace Theorem_ACPrototype_WebAPI
             services.AddScoped<EfCoreDeviceRepository>();
             //services.AddScoped<EfCoreStarRepository>();
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddGitHubWebHooks();
+            services.AddMvc(opt =>
+            {
+                opt.EnableEndpointRouting = false;
+            }).AddNewtonsoftJson()
+              .AddGitHubWebHooks()
+              .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
         }
 
@@ -85,6 +88,8 @@ namespace Theorem_ACPrototype_WebAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.UseMvc().UseMvcWithDefaultRoute();
         }
     }
 }
